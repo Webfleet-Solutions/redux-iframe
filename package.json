@@ -1,0 +1,44 @@
+{
+  "name": "redux-iframe",
+  "description": "Build stateful micro frontends by sharing Redux state and actions between iframe modules and container applications",
+  "version": "0.4.0",
+  "license": "MIT",
+  "keywords": [
+    "redux",
+    "iframe",
+    "state"
+  ],
+  "author": "torsten.schlieder@webfleet.com",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.ttt-sp.com/users/tschlieder/repos/redux-iframe/browse"
+  },
+  "main": "dist/redux-iframe.cjs.js",
+  "module": "dist/redux-iframe.esm.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha -r ts-node/register test/**/*-test.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "redux": ">=1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.11",
+    "chai": "^4.2.0",
+    "cross-env": "^6.0.3",
+    "mocha": "^6.2.1",
+    "redux": "4.0.4",
+    "rollup": "^1.23.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.2"
+  }
+}

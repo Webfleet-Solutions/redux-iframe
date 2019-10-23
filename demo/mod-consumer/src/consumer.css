@@ -1,0 +1,17 @@
+.Consumer {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    background-color: #1569C7;
+}
+
+.Consumer h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.ConsumerHighlighted {
+    background-color: cornflowerblue;
+}
+
+
