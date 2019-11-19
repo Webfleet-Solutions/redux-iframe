@@ -1,0 +1,15 @@
+.Solitary {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    background-color: darkgreen;
+}
+
+.Solitary h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.SolitaryHighlighted {
+    background-color: forestgreen;
+}

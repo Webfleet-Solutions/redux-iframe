@@ -1,0 +1,11 @@
+.Producer {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    background-color: darkred;
+}
+
+.Producer h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}

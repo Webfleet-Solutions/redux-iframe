@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    max-width: 650px;
+    border: solid thin lightgrey;
+    font-family: "Segoe UI", sans-serif;
+}
+
+#root {
+    margin: 10px;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "redux-iframe-demo",
+  "description": "Simple demo application for the redux-iframe library",
+  "private": true,
+  "workspaces": [
+    "lib-common",
+    "application",
+    "mod-consumer",
+    "mod-producer",
+    "mod-solitary"
+  ],
+  "scripts": {
+    "postinstall": "yarn run build:lib",
+    "start": "serve -l 3000 public",
+    "build": "yarn run build:lib && yarn run build:app && yarn run build:mod",
+    "build:lib": "concurrently npm:build:lib-common npm:build:lib-parent",
+    "build:lib-common": "yarn --cwd lib-common build",
+    "build:lib-parent": "yarn --cwd .. build && yarn --cwd .. link && yarn link redux-iframe",
+    "build:app": "yarn --cwd application build",
+    "build:mod": "concurrently npm:build:mod-consumer npm:build:mod-producer npm:build:mod-solitary",
+    "build:mod-consumer": "yarn --cwd mod-consumer build",
+    "build:mod-producer": "yarn --cwd mod-producer build",
+    "build:mod-solitary": "yarn --cwd mod-solitary build"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "serve": "^11.1.0"
+  }
+} 
