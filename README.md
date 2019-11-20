@@ -7,6 +7,10 @@ Build stateful micro frontends by sharing Redux state and actions between `<ifra
 
 Redux-iframe is a tiny 2.5k library with [Redux](https://github.com/reduxjs/redux) as only dependency.
 
+[![build status](https://img.shields.io/travis/Webfleet-Solutions/redux-iframe/master.svg?style=flat-square)](https://travis-ci.org/Webfleet-Solutions/redux-iframe)
+[![npm version](https://img.shields.io/npm/v/redux-iframe.svg?style=flat-square)](https://www.npmjs.com/package/redux-iframe)
+[![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
+
 # Install
 ```
 npm install redux-iframe
