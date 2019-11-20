@@ -1,7 +1,7 @@
 {
   "name": "redux-iframe",
   "description": "Build stateful micro frontends by sharing Redux state and actions between iframe modules and container applications",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "MIT",
   "keywords": [
     "redux",
@@ -11,7 +11,7 @@
   "author": "torsten.schlieder@webfleet.com",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.ttt-sp.com/users/tschlieder/repos/redux-iframe/browse"
+    "url": "https://github.com/Webfleet-Solutions/redux-iframe"
   },
   "main": "dist/redux-iframe.cjs.js",
   "module": "dist/redux-iframe.esm.js",
