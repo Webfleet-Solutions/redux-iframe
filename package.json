@@ -1,7 +1,7 @@
 {
   "name": "redux-iframe",
   "description": "Build stateful micro frontends by sharing Redux state and actions between iframe modules and container applications",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": "MIT",
   "keywords": [
     "redux",
