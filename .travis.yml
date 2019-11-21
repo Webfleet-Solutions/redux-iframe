@@ -1,10 +1,12 @@
 language: node_js
 node_js:
 - 10
+install:
+  - yarn install
 script:
-- yarn build
-- yarn test
-- yarn --silent run coveralls
+  - yarn build
+  - yarn test
+  - yarn --silent run coveralls
 deploy:
   provider: npm
   email: torsten.schlieder@gmx.net
