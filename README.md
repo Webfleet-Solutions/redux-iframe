@@ -9,6 +9,7 @@ Redux-iframe is a tiny 2.5k library with [Redux](https://github.com/reduxjs/redu
 
 [![build status](https://img.shields.io/travis/Webfleet-Solutions/redux-iframe/master.svg?style=flat-square)](https://travis-ci.org/Webfleet-Solutions/redux-iframe)
 [![npm version](https://img.shields.io/npm/v/redux-iframe.svg?style=flat-square)](https://www.npmjs.com/package/redux-iframe)
+[![coverage status](https://coveralls.io/repos/github/Webfleet-Solutions/redux-iframe/badge.svg?branch=master)](https://coveralls.io/github/Webfleet-Solutions/redux-iframe?branch=master)
 [![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 
 # Install
