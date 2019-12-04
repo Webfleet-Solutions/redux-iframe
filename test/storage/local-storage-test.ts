@@ -24,6 +24,12 @@ describe('getStoredState', () => {
         expect(result).to.be.undefined
     })
 
+    it('should return undefined on storage errors', () => {
+        createFakeWindow({ foo: 124 }, true)
+        const result = getStoredState(['foo'], ROOT_KEY)
+        expect(result).to.be.undefined
+    })
+
     it('should get the state from local storage', () => {
         createFakeWindow({ foo: 124, bar: 456, baz: 789 })
         const result = getStoredState(['foo', 'baz'], ROOT_KEY)
@@ -32,6 +38,24 @@ describe('getStoredState', () => {
 })
 
 describe('installStorageWriter', () => {
+    it('should return undefined if no localStorage exists', () => {
+        (global as any).window = {}
+        const store = createStore((s: any) => s)
+        const result = installStorageWriter(store, [])
+        expect(result).to.be.undefined
+    })
+
+    it('should do nothing on storage errors', () => {
+        const actionType = 'MY_ACTION'
+        const reducer = (s: any, a: AnyAction) => a.type === actionType ? a.state : s
+        const store = createStore(reducer)
+        const localStorage = createFakeWindow(null, true)
+        installStorageWriter(store, ['foo'], ROOT_KEY)
+        store.dispatch({ type: actionType, state: { foo: 124 } })
+
+        expect(localStorage.getWriteCount()).to.equal(0)
+    })
+
     it('should copy selected substate to local storage', () => {
         const actionType = 'MY_ACTION'
         const reducer = (s: any, a: AnyAction) => a.type === actionType ? a.state : s
@@ -69,15 +93,23 @@ describe('installStorageWriter', () => {
 
 class LocalStorageMock {
     private readonly store: { [k: string]: string }
+    private readonly throwError: boolean
     private writeCount: number
-    constructor(initialState: Object | null) {
+    constructor(initialState: Object | null, throwError: boolean) {
         this.store = initialState ? { [ROOT_KEY]: JSON.stringify(initialState) } : {}
+        this.throwError = throwError
         this.writeCount = 0
     }
     getItem(key: string): string | null {
+        if (this.throwError) {
+            throw new Error("bang")
+        }
         return this.store[key] || null
     }
     setItem(key: string, value: string) {
+        if (this.throwError) {
+            throw new Error("bang")
+        }
         this.store[key] = value
         ++this.writeCount
     }
@@ -86,8 +118,8 @@ class LocalStorageMock {
     }
 }
 
-const createFakeWindow = (initialState: Object | null): LocalStorageMock => {
-    const localStorage = new LocalStorageMock(initialState)
+const createFakeWindow = (initialState: Object | null, throwError: boolean | undefined = false): LocalStorageMock => {
+    const localStorage = new LocalStorageMock(initialState, throwError)
     ;(global as any).window = { localStorage }
     return localStorage
 }
