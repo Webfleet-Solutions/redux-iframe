@@ -3,7 +3,7 @@ export { createModuleEventSender, createParentEventSender } from './events/event
 export { installEventListener } from './events/event-listener'
 
 // Local storage needed by iframe modules
-export { getStoredState, installStorageWriter } from './storage/local-storage'
+export { getStoredState, installStorageWriter, StorageType } from './storage/web-storage'
 
 // Access to the parent Redux state needed by iframe modules
 export { makeStoreGlobal } from './global/global-store'
