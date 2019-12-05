@@ -3,7 +3,7 @@
 Build stateful micro frontends by sharing Redux state and actions between `<iframe>` modules and container applications:
 * Pass Redux actions across window boundaries using the Browser's event system.
 * Inherit parts of the Redux state from a parent application when a module is loaded.
-* Save Redux state in the Browser's local storage and retrieve it on reloading of modules.
+* Save Redux state in the Browser's session / local storage and retrieve it on reloading of modules.
 
 Redux-iframe is a tiny 2.5k library with [Redux](https://github.com/reduxjs/redux) as only dependency.
 
@@ -128,9 +128,11 @@ const initialState = getParentState([MY_STATE])
 const store = createStore(combineReducers(reducers), initialState)
 ```
 
-## Local Storage
-Modules may save parts of their state in the Browser's local storage and retrieve it on re-loading. The storage cycle is triggered on each action,
-but the actual writing to local storage only happens if one of the state parts changed. As for state inheritance, this currently works for top-level
+## Web Storage
+Modules may save parts of their state in the Browser's [session storage](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage) (default)
+or [local storage](https://developer.mozilla.org/docs/Web/API/Window/localStorage) and retrieve it on re-loading.
+The storage cycle is triggered on each action, but the actual writing to web storage only happens if one of the state parts changed.
+As for state inheritance, this currently works for top-level
 keys only. 
 
 ```javascript
@@ -147,6 +149,22 @@ const initialState = getStoredState([MY_STATE])
 const store = createStore(combineReducers(reducers), initialState)
 
 installStorageWriter(store, [MY_STATE])
+```
+If you want to use local storage (which keeps the state even if the tab or Browser is closed) instead of session storage,
+you can provide an additional argument to `getStoredState` and `installStorageWriter`. Usingh that argument object, you can
+also choose a different key name for the state object (default is "redux-iframe-state"): 
+```javascript
+import { combineReducers, createStore } from 'redux'
+import { getStoredState, installStorageWriter, StorageType } from 'redux-iframe'
+import { default as sharedReducer, MY_STATE } from 'shared'
+
+const reducers = { [MY_STATE]: sharedReducer }
+
+const initialState = getStoredState([MY_STATE], { storageType: StorageType.LOCAL, rootKey: 'my-key' })
+
+const store = createStore(combineReducers(reducers), initialState)
+
+installStorageWriter(store, [MY_STATE], { storageType: StorageType.LOCAL, rootKey: 'my-key' })
 ```
 
 ## Merging Initial State
@@ -176,7 +194,6 @@ In the example, the parent state overwrites the local state, if any.
 # To Do
 * Allow inheriting the parent state via `postMessage`/`addEventListener`
 * Allow copies of state slices below the root level 
-* Let the user choose between Local Storage and Session Storage
 
 # License
 
