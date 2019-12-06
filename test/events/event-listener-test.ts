@@ -14,7 +14,7 @@ describe('eventListener', () => {
     it('should receive events and dispatch them to the Redux store', () => {
         createFakeWindow()
 
-        const store = createStore((state, action) => action.type === actionType ? action : state)
+        const store = createStore(createReducer(actionType))
         installEventListener(store, [action.type], { addMarker: false })
 
         expect(store.getState()).to.eql(action)
@@ -23,7 +23,7 @@ describe('eventListener', () => {
     it('should add a marker before dispatching', () => {
         createFakeWindow()
 
-        const store = createStore((state, action) => action.type === actionType ? action : state)
+        const store = createStore(createReducer(actionType))
         installEventListener(store, [action.type])
 
         // The listener adds a marker to the action, which is later removed by the event-sender middleware
@@ -33,7 +33,20 @@ describe('eventListener', () => {
 
         expect(store.getState()).to.eql(expected)
     })
+
+    it('should not dispatch unregistered actions to the Redux store', () => {
+        createFakeWindow()
+
+        const store = createStore(createReducer(actionType))
+        installEventListener(store, [], { addMarker: false }) // No actions accepted
+
+        expect(store.getState()).to.be.undefined
+    })
 })
+
+const createReducer = (actionType: string) => (
+    (state: any, action: AnyAction) => action.type === actionType ? action : state
+)
 
 const createFakeWindow = (): void => {
     (global as any).window = {

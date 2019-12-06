@@ -12,9 +12,9 @@ describe('getStoredState', () => {
         expect(result).to.be.undefined
     })
 
-    it('should return undefined if no session storage exists', () => {
+    it('should return undefined if no local storage exists', () => {
         (global as any).window = {}
-        const result = getStoredState([], { storageType: StorageType.SESSION })
+        const result = getStoredState([], { storageType: StorageType.LOCAL })
         expect(result).to.be.undefined
     })
 
@@ -57,10 +57,10 @@ describe('installStorageWriter', () => {
         expect(result).to.be.undefined
     })
 
-    it('should return undefined if no session storage exists', () => {
+    it('should return undefined if no local storage exists', () => {
         (global as any).window = {}
         const store = createStore((s: any) => s)
-        const result = installStorageWriter(store, [], { storageType: StorageType.SESSION })
+        const result = installStorageWriter(store, [], { storageType: StorageType.LOCAL })
         expect(result).to.be.undefined
     })
 

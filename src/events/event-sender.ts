@@ -39,7 +39,7 @@ const createEventSenderMiddleware = (windowSelector: WindowSelector, actionsToSe
                     // Such actions are not sent again to avoid cycles.
                     delete action[EVENT_MARKER]
                 }
-                else if (actionsToSend === null || actionsToSend.includes(action.type)) {
+                else if (actionsToSend.includes(action.type)) {
                     const targetWindow = windowSelector()
                     if (targetWindow) { // Target window (iframe) may not be loaded at the moment
                         const message = JSON.stringify(action)
