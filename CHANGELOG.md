@@ -1,3 +1,6 @@
+# 1.1.0
+Updated dependencies due to vulnerabilities reported by GitHub.
+
 # 1.0.0
 Support for session storage (default) and local storage.
 
