@@ -15,16 +15,16 @@ import { Store } from 'redux'
  *
  * @param keys array of Redux top-level keys to copy from
  * @param globalName name of the global variable holding the Redux store
+ * @param verbose boolean that logs loaded state to console if true
  * @return a slice of the store of the parent window or undefined if no parent window exists
  */
-export const getParentState = (keys: Array<string>, globalName: string = 'ReduxStore'): Object | undefined => {
+export const getParentState = (keys: Array<string>, globalName: string = 'ReduxStore', verbose: boolean = false): Object | undefined => {
     if (window.parent && typeof (window.parent as any)[globalName] === 'object') {
         const parentStore: Store = (window.parent as any)[globalName]
         if (typeof parentStore.getState === 'function') {
             const parentState = parentStore.getState()
             const filteredState = filterState(parentState, keys)
-            // TODO: Remove or configure log output
-            console.log('Loaded state from parent window:', filteredState)
+            if (verbose) console.log('Loaded state from parent window:', filteredState)
             return filteredState
         }
     }

@@ -14,6 +14,10 @@ type EventListenerOptions = {
      * or if the arrays <code>actionsToSend</code> and <code>acceptedActions</code> are disjoint.
      */
     addMarker: boolean
+    /**
+     * If true, log all received messages from iFrame and their event.data.
+     */
+    verbose: boolean
 }
 
 /**
@@ -23,9 +27,9 @@ type EventListenerOptions = {
  * @param acceptedActions array of types (strings) of accepted actions
  * @param options parameters to control the event listener
  */
-export const installEventListener = (store: Store, acceptedActions: Array<string>, options: EventListenerOptions = { addMarker: true }) => {
+export const installEventListener = (store: Store, acceptedActions: Array<string>, options: EventListenerOptions = { addMarker: true, verbose: false }) => {
     window.addEventListener('message', event => {
-        console.log('Received message', event.data)
+        if (options.verbose) console.log('Received message', event.data)
         try {
             const action: AnyAction = JSON.parse(event.data)
             if (action.type && acceptedActions.includes(action.type)) {

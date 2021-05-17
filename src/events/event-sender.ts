@@ -29,8 +29,9 @@ export const createModuleEventSender = (actionsToSend: Array<string>, iFrameId: 
  * @param windowSelector function that returns the target window for the message
  * @param actionsToSend array of types (strings) of actions to be sent to the target window
  * @param targetOrigin the target origin (URL), defaults to the URL of the current window
+ * @param verbose boolean that logs sent message to console if true
  */
-const createEventSenderMiddleware = (windowSelector: WindowSelector, actionsToSend: Array<string>, targetOrigin: string): Middleware => {
+const createEventSenderMiddleware = (windowSelector: WindowSelector, actionsToSend: Array<string>, targetOrigin: string, verbose: boolean = false): Middleware => {
     return (store: MiddlewareAPI<Dispatch<AnyAction>>) => {
         return (next: Dispatch<AnyAction>) => {
             return (action: AnyAction) => {
@@ -43,7 +44,7 @@ const createEventSenderMiddleware = (windowSelector: WindowSelector, actionsToSe
                     const targetWindow = windowSelector()
                     if (targetWindow) { // Target window (iframe) may not be loaded at the moment
                         const message = JSON.stringify(action)
-                        console.log('Sending message', message)
+                        if (verbose) console.log('Sending message', message)
                         targetWindow.postMessage(message, targetOrigin)
                     }
                 }
