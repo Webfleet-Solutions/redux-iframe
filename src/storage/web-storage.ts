@@ -41,8 +41,9 @@ const DEFAULT_STORAGE_OPTIONS : StorageOptions = {
  *
  * @param keys array of Redux top-level keys to load
  * @param options storage options (which default to rootKey: 'state' and storage: SESSION)
+ * @param verbose boolean that logs loaded state to console if true
  */
-export const getStoredState = (keys: Array<string>, options: StorageOptions = DEFAULT_STORAGE_OPTIONS): Object | undefined => {
+export const getStoredState = (keys: Array<string>, options: StorageOptions = DEFAULT_STORAGE_OPTIONS, verbose: boolean = false): Object | undefined => {
     const storage = getStorage(options.storageType || StorageType.SESSION)
     if (storage) {
         try {
@@ -52,8 +53,7 @@ export const getStoredState = (keys: Array<string>, options: StorageOptions = DE
                 return undefined
             }
             const filteredState = filterState(JSON.parse(serializedState), keys)
-            // TODO: Remove or configure log output
-            console.log('Loaded state from storage:', filteredState)
+            if (verbose) console.log('Loaded state from storage:', filteredState)
             return filteredState
         } catch (err) {
             console.warn('Cannot read from storage:', err)
@@ -102,15 +102,15 @@ const getStorage = (storageType: StorageType) => {
  *
  * @param state the Redux state object
  * @param options storage options (which default to rootKey: 'state' and storage: SESSION)
+ * @param verbose boolean that logs saved state to console if true
  * @return true if storing succeeded, false otherwise
  */
-const saveState = (state: Object, options: StorageOptions): boolean => {
+const saveState = (state: Object, options: StorageOptions, verbose: boolean = false): boolean => {
     const storage = getStorage(options.storageType || StorageType.SESSION)
     if (storage) {
         try {
             if (state) {
-                // TODO: Remove or configure log output
-                console.log('Saved state to storage:', state)
+                if (verbose) console.log('Saved state to storage:', state)
                 storage.setItem(options.rootKey || ROOT_KEY, JSON.stringify(state))
                 return true
             }
